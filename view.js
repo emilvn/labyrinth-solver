@@ -1,4 +1,6 @@
 export function init(grid) {
+  const labyrinth = document.querySelector("#labyrinth");
+  labyrinth.innerHTML = "";
   for (let i = 0; i < grid.rowNum; i++) {
     for (let j = 0; j < grid.colNum; j++) {
       const cell = grid.get(i, j);
@@ -22,7 +24,7 @@ export function init(grid) {
       }
       cellElement.dataset.row = i;
       cellElement.dataset.col = j;
-      document.querySelector("#labyrinth").appendChild(cellElement);
+      labyrinth.appendChild(cellElement);
     }
   }
   document.documentElement.style.setProperty("--row-num", grid.rowNum);

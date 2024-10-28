@@ -8,7 +8,7 @@
       :root {
         --row-num: 10;
         --col-num: 10;
-        --cell-size: 100px;
+        --cell-size: 48px;
       }
       body {
         background-color: gainsboro;
@@ -21,7 +21,7 @@
       }
       .cell {
         box-sizing: border-box;
-        outline: 1px dashed gray;
+        border: 1px dashed gray;
         width: var(--cell-size);
         display: flex;
         justify-content: center;
@@ -30,16 +30,16 @@
         font-size: large;
       }
       .wall.north {
-        border-top: 2px solid black;
+        border-top: 2px solid gray;
       }
       .wall.east {
-        border-right: 2px solid black;
+        border-right: 2px solid gray;
       }
       .wall.south {
-        border-bottom: 2px solid black;
+        border-bottom: 2px solid gray;
       }
       .wall.west {
-        border-left: 2px solid black;
+        border-left: 2px solid gray;
       }
       .visited {
         background-color: #cafebabe;

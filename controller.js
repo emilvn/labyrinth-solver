@@ -6,21 +6,37 @@ import * as view from "./view.js";
 
 window.addEventListener("load", init);
 
-const TICK_RATE = 100;
+const TICK_RATE = 50;
 // prettier-ignore
 const STRATEGY = [
-  "west",
   "south",
   "north",
+  "west",
   "east",
 ];
-const grid = new Grid(labyrinth.rows, labyrinth.cols);
+let grid = new Grid(labyrinth.rows, labyrinth.cols);
 
 function init() {
-  labyrinth.maze.flatMap((c) => c).forEach((c) => grid.set(c.row, c.col, c));
+  loop();
+}
+
+function loop() {
+  shuffleArray(STRATEGY);
+  console.log(STRATEGY);
+
+  resetGrid();
+  bfs(grid).then(() => {
+    resetGrid();
+    dfs(grid).then(loop);
+  });
+}
+
+function resetGrid() {
+  structuredClone(labyrinth)
+    .maze.flatMap((c) => c)
+    .forEach((c) => grid.set(c.row, c.col, c));
   view.init(grid);
   view.displayStartAndGoal(labyrinth);
-  bfs(grid);
 }
 
 function sleep(ms) {
@@ -32,53 +48,35 @@ async function dfs(grid) {
   const goal = grid.get(labyrinth.goal.row, labyrinth.goal.col);
   let current = grid.get(labyrinth.start.row, labyrinth.start.col);
   stack.push(current);
+
   while (current.row !== goal.row || current.col !== goal.col) {
     current.visited = true;
     view.displayGrid(grid);
     let deadEnd = true;
-    const northCell = grid.get(current.row - 1, current.col);
-    const eastCell = grid.get(current.row, current.col + 1);
-    const southCell = grid.get(current.row + 1, current.col);
-    const westCell = grid.get(current.row, current.col - 1);
+    const adjacentMap = {
+      north: grid.get(current.row - 1, current.col),
+      east: grid.get(current.row, current.col + 1),
+      south: grid.get(current.row + 1, current.col),
+      west: grid.get(current.row, current.col - 1),
+    };
     for (const direction of STRATEGY) {
-      if (!current[direction] && direction === "north" && !northCell?.visited) {
-        current = northCell;
-        stack.push(northCell);
-        deadEnd = false;
-        break;
-      }
-      if (!current[direction] && direction === "east" && !eastCell?.visited) {
-        current = eastCell;
-        stack.push(eastCell);
-        deadEnd = false;
-        break;
-      }
-      if (!current[direction] && direction === "south" && !southCell?.visited) {
-        current = southCell;
-        stack.push(southCell);
-        deadEnd = false;
-        break;
-      }
-      if (!current[direction] && direction === "west" && !westCell?.visited) {
-        current = westCell;
-        stack.push(westCell);
+      const adjacent = adjacentMap[direction];
+      if (!current[direction] && !adjacent?.visited) {
+        current = adjacent;
+        stack.push(adjacent);
         deadEnd = false;
         break;
       }
     }
     if (deadEnd) {
-      handleDFSDeadEnd(stack);
+      const deadEnd = stack.pop();
+      view.markDeadEnd(deadEnd.row, deadEnd.col);
       current = stack.peek();
     }
     await sleep(TICK_RATE);
   }
   goal.visited = true;
   view.displayGrid(grid);
-}
-
-function handleDFSDeadEnd(stack) {
-  const deadEnd = stack.pop();
-  view.markDeadEnd(deadEnd.row, deadEnd.col);
 }
 
 async function bfs(grid) {
@@ -92,26 +90,17 @@ async function bfs(grid) {
     current = queue.dequeue();
     current.visited = true;
     view.displayGrid(grid);
-    const northCell = grid.get(current.row - 1, current.col);
-    const eastCell = grid.get(current.row, current.col + 1);
-    const southCell = grid.get(current.row + 1, current.col);
-    const westCell = grid.get(current.row, current.col - 1);
+    const adjacentMap = {
+      north: grid.get(current.row - 1, current.col),
+      east: grid.get(current.row, current.col + 1),
+      south: grid.get(current.row + 1, current.col),
+      west: grid.get(current.row, current.col - 1),
+    };
     for (const direction of STRATEGY) {
-      if (!current[direction] && direction === "north" && !northCell?.visited) {
-        northCell.parent = current;
-        queue.enqueue(northCell);
-      }
-      if (!current[direction] && direction === "east" && !eastCell?.visited) {
-        eastCell.parent = current;
-        queue.enqueue(eastCell);
-      }
-      if (!current[direction] && direction === "south" && !southCell?.visited) {
-        southCell.parent = current;
-        queue.enqueue(southCell);
-      }
-      if (!current[direction] && direction === "west" && !westCell?.visited) {
-        westCell.parent = current;
-        queue.enqueue(westCell);
+      const adjacent = adjacentMap[direction];
+      if (!current[direction] && !adjacent?.visited) {
+        adjacent.parent = current;
+        queue.enqueue(adjacent);
       }
     }
 
@@ -125,4 +114,14 @@ async function bfs(grid) {
     await sleep(TICK_RATE);
   }
   view.displayGrid(grid);
+}
+
+// for randomizing strategy each run
+function shuffleArray(array) {
+  for (var i = array.length - 1; i >= 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
 }
