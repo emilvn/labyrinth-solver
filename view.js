@@ -74,3 +74,16 @@ export function markShortestPath(row, col) {
   );
   cellElement.classList.add("shortest-path");
 }
+
+export function displayStrategy(strategy) {
+  document.querySelector("#strategy").innerText = (
+    strategy[0][0] +
+    strategy[1][0] +
+    strategy[2][0] +
+    strategy[3][0]
+  ).toUpperCase();
+}
+
+export function displayAlgorithm(name) {
+  document.querySelector("#algorithm").innerText = name;
+}

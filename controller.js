@@ -22,11 +22,12 @@ function init() {
 
 function loop() {
   shuffleArray(STRATEGY);
-  console.log(STRATEGY);
-
+  view.displayStrategy(STRATEGY);
+  view.displayAlgorithm("Breadth First Search");
   resetGrid();
   bfs(grid).then(() => {
     resetGrid();
+    view.displayAlgorithm("Depth First Search");
     dfs(grid).then(loop);
   });
 }
