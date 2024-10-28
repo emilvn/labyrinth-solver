@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Labyrinth</title>
+    <style>
+      :root {
+        --row-num: 10;
+        --col-num: 10;
+        --cell-size: 100px;
+      }
+      body {
+        background-color: gainsboro;
+      }
+      #labyrinth {
+        display: grid;
+        grid-template-columns: repeat(var(--col-num), var(--cell-size));
+        grid-template-rows: repeat(var(--row-num), var(--cell-size));
+      }
+      .cell {
+        box-sizing: border-box;
+        outline: 1px dashed gray;
+        width: var(--cell-size);
+      }
+      .wall.north {
+        border-top: 2px solid gray;
+      }
+      .wall.east {
+        border-right: 2px solid gray;
+      }
+      .wall.south {
+        border-bottom: 2px solid gray;
+      }
+      .wall.west {
+        border-left: 2px solid gray;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="labyrinth"></div>
+    <script src="controller.js" type="module"></script>
+  </body>
+</html>
