@@ -12,6 +12,7 @@
       }
       body {
         background-color: gainsboro;
+        font-family: monospace;
       }
       #labyrinth {
         display: grid;
@@ -22,18 +23,32 @@
         box-sizing: border-box;
         outline: 1px dashed gray;
         width: var(--cell-size);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: large;
       }
       .wall.north {
-        border-top: 2px solid gray;
+        border-top: 2px solid black;
       }
       .wall.east {
-        border-right: 2px solid gray;
+        border-right: 2px solid black;
       }
       .wall.south {
-        border-bottom: 2px solid gray;
+        border-bottom: 2px solid black;
       }
       .wall.west {
-        border-left: 2px solid gray;
+        border-left: 2px solid black;
+      }
+      .visited {
+        background-color: #cafebabe;
+      }
+      .dead-end {
+        background-color: #97cb878b;
+      }
+      .shortest-path {
+        background-color: rebeccapurple;
       }
     </style>
   </head>

@@ -30,25 +30,45 @@ export function init(grid) {
 }
 
 export function displayGrid(grid) {
-  const cells = document.querySelectorAll("#grid .cell");
-  // clear all cells
-  for (const cell of cells) {
-    cell.classList.remove("snake", "food");
-  }
-  // set snake and food cells
+  const cells = document.querySelectorAll("#labyrinth .cell");
   for (let i = 0; i < grid.rowNum; i++) {
     for (let j = 0; j < grid.colNum; j++) {
-      const cell = document.querySelector(
+      const cell = grid.get(i, j);
+      const cellElement = document.querySelector(
         `.cell[data-row="${i}"][data-col="${j}"]`
       );
-      const cellValue = grid.get(i, j);
-      if (cellValue === 0) {
-        cell.classList.remove("snake", "food");
-      } else if (cellValue === 1) {
-        cell.classList.add("snake");
-      } else if (cellValue === 2) {
-        cell.classList.add("food");
+      if (cell?.visited) {
+        cellElement.classList.add("visited");
       }
     }
   }
+}
+
+/**
+ *
+ * @param {import("./Labyrinth").Labyrinth} labyrinth
+ */
+export function displayStartAndGoal(labyrinth) {
+  const startElement = document.querySelector(
+    `.cell[data-row="${labyrinth.start.row}"][data-col="${labyrinth.start.col}"]`
+  );
+  const goalElement = document.querySelector(
+    `.cell[data-row="${labyrinth.goal.row}"][data-col="${labyrinth.goal.col}"]`
+  );
+  startElement.innerText = "start";
+  goalElement.innerText = "goal";
+}
+
+export function markDeadEnd(row, col) {
+  const cellElement = document.querySelector(
+    `.cell[data-row="${row}"][data-col="${col}"]`
+  );
+  cellElement.classList.add("dead-end");
+}
+
+export function markShortestPath(row, col) {
+  const cellElement = document.querySelector(
+    `.cell[data-row="${row}"][data-col="${col}"]`
+  );
+  cellElement.classList.add("shortest-path");
 }
