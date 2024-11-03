@@ -12,4 +12,8 @@ Labyrinth generated using Recursive Backtracking algorithm.
 
 ## Solver
 
-Labyrinth solver alternates between using Depth First Search (dfs) and Breadth First Search (bfs)
+Labyrinth solver alternates between using Depth First Search (BFS) and Breadth First Search (BFS)
+
+for BFS it highlights the route after it finds it, then changes to DFS
+
+for DFS it just pauses and shows the route before chaning to BFS

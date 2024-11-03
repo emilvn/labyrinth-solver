@@ -33,7 +33,7 @@ export function loop() {
   bfs(grid).then(() => {
     resetGrid();
     view.displayAlgorithm("Depth First Search");
-    dfs(grid).then(loop);
+    dfs(grid).then(() => setTimeout(loop, 1000));
   });
 }
 
