@@ -1,5 +1,7 @@
 # labyrinth generator/solver
 
+https://emilvn.dk/labyrinth-solver
+
 ## Generator
 
 Labyrinth generated using Recursive Backtracking algorithm.
