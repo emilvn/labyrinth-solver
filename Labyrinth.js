@@ -40,6 +40,9 @@ function generateLabyrinth(rows, cols) {
 
   // move in random directions through the maze until all cells have been visited
   // carving a path by removing walls between cells we move through
+  // we use recursive backtracking by recursively moving through the grid until we hit a dead end
+  // then we simply don't make the recursive call, and it will go "back" to the latest other valid direction
+  // until there are no valid paths left in the grid
   function carve(row, col) {
     maze[row][col].visited = true;
 
