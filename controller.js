@@ -37,6 +37,7 @@ function loop() {
 }
 
 function resetGrid() {
+  labyrinth = generateLabyrinth(ROWS, COLS);
   structuredClone(labyrinth)
     .maze.flatMap((c) => c)
     .forEach((c) => grid.set(c.row, c.col, c));
