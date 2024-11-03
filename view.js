@@ -1,3 +1,5 @@
+import * as controller from "./controller.js";
+
 export function init(grid) {
   const labyrinth = document.querySelector("#labyrinth");
   labyrinth.innerHTML = "";
@@ -85,4 +87,15 @@ export function displayStrategy(strategy) {
 
 export function displayAlgorithm(name) {
   document.querySelector("#algorithm").innerText = name;
+}
+
+export function addFormEvents() {
+  const form = document.querySelector("#labyrinth-form");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    controller.setRowsAndCols(e.target.rows.value, e.target.cols.value);
+    form.querySelector("button").style.display = "none";
+    form.querySelector(".form-description").style.display = "inline";
+  });
 }

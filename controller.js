@@ -14,17 +14,18 @@ const STRATEGY = [
   "west",
   "east",
 ];
-const ROWS = 10;
-const COLS = 10;
+let ROWS = 10;
+let COLS = 10;
 
 let grid = new Grid(ROWS, COLS);
 let labyrinth = generateLabyrinth(ROWS, COLS);
 
 function init() {
+  view.addFormEvents();
   loop();
 }
 
-function loop() {
+export function loop() {
   shuffleArray(STRATEGY);
   view.displayStrategy(STRATEGY);
   view.displayAlgorithm("Breadth First Search");
@@ -37,6 +38,11 @@ function loop() {
 }
 
 function resetGrid() {
+  const form = document.querySelector("#labyrinth-form");
+  form.querySelector("button").style.display = "block";
+  form.querySelector(".form-description").style.display = "none";
+
+  grid = new Grid(ROWS, COLS);
   labyrinth = generateLabyrinth(ROWS, COLS);
   structuredClone(labyrinth)
     .maze.flatMap((c) => c)
@@ -130,4 +136,10 @@ function shuffleArray(array) {
     array[i] = array[j];
     array[j] = temp;
   }
+}
+
+export function setRowsAndCols(rows, cols) {
+  if (rows < 2 || cols < 2) return;
+  ROWS = rows;
+  COLS = cols;
 }

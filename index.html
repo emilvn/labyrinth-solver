@@ -53,10 +53,33 @@
       .text {
         font-size: x-large;
       }
+      #labyrinth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 5px;
+      }
+      #labyrinth-form input,
+      #labyrinth-form button {
+        width: 100px;
+      }
+      .form-description {
+        font-style: italic;
+        color: gray;
+        display: none;
+      }
     </style>
   </head>
   <body>
     <div id="labyrinth"></div>
+    <form id="labyrinth-form">
+      <input type="number" name="rows" id="rows" placeholder="rows" />
+      <input type="number" name="cols" id="cols" placeholder="cols" />
+      <button>ok</button>
+      <span class="form-description"
+        >Labyrinth will be updated on next run</span
+      >
+    </form>
     <div class="text">Strategy: <span id="strategy"></span></div>
     <div class="text">Algorithm: <span id="algorithm"></span></div>
     <script src="controller.js" type="module"></script>
