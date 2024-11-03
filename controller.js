@@ -1,5 +1,5 @@
 import { Grid } from "./grid.js";
-import labyrinth from "./Labyrinth.js";
+import generateLabyrinth from "./labyrinth.js";
 import { Queue } from "./queue.js";
 import Stack from "./stack.js";
 import * as view from "./view.js";
@@ -14,7 +14,11 @@ const STRATEGY = [
   "west",
   "east",
 ];
-let grid = new Grid(labyrinth.rows, labyrinth.cols);
+const ROWS = 10;
+const COLS = 10;
+
+let grid = new Grid(ROWS, COLS);
+let labyrinth = generateLabyrinth(ROWS, COLS);
 
 function init() {
   loop();
@@ -119,9 +123,9 @@ async function bfs(grid) {
 
 // for randomizing strategy each run
 function shuffleArray(array) {
-  for (var i = array.length - 1; i >= 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
+  for (let i = array.length - 1; i >= 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
     array[i] = array[j];
     array[j] = temp;
   }

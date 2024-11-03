@@ -32,7 +32,6 @@ export function init(grid) {
 }
 
 export function displayGrid(grid) {
-  const cells = document.querySelectorAll("#labyrinth .cell");
   for (let i = 0; i < grid.rowNum; i++) {
     for (let j = 0; j < grid.colNum; j++) {
       const cell = grid.get(i, j);
@@ -48,7 +47,7 @@ export function displayGrid(grid) {
 
 /**
  *
- * @param {import("./Labyrinth").Labyrinth} labyrinth
+ * @param {import("./labyrinth").Labyrinth} labyrinth
  */
 export function displayStartAndGoal(labyrinth) {
   const startElement = document.querySelector(
